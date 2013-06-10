@@ -20,6 +20,7 @@
     //
 
     function onGeoSuccess(position) {
+      alert("testing onGeoSuccess event!");
       lat = position.coords.latitude;
       lon = position.coords.longitude;
       var currentposition = new google.maps.LatLng(lat,lon);
@@ -42,6 +43,7 @@
     // Show an alert if there is a problem getting the geolocation
     //
     function onGeoError(error){
+      alert("testing onGeoError event!");
       if (error == 1){
         alert('Turn on geolocation services');
       }
