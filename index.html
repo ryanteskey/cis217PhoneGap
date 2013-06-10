@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" charset="utf-8" src="javascript/cordova.js">
-    // onSuccess Callback
-    //
-    var onSuccess = function(position) {
-      alert(
-      'Latitude: '          + position.coords.latitude          + '\n' +
-      'Longitude: '         + position.coords.longitude         + '\n' +
-      'Heading: '           + position.coords.heading           + '\n' +
-      'Speed: '             + position.coords.speed             + '\n' +
-      'Timestamp: '         + position.timestamp                + '\n');
-    };
+  <title>Geolocation Position Example</title>
+  <script type="text/javascript" charset="utf-8" src="cordova-2.8.0.js"></script>
+  <script type="text/javascript" charset="utf-8">
 
-    // onError Callback
+    // Set an event to wait for Cordova to load
     //
-    var onError = function() {
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is loaded and Ready
+    //
+    function onDeviceReady() {
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+
+    // Display `Position` properties from the geolocation
+    //
+    function onSuccess(position) {
+      var div = document.getElementById('myDiv');
+
+      div.innerHTML = '' +
+      'Latitude: '             + position.coords.latitude  + '<br/>' +
+      'Longitude: '            + position.coords.longitude + '<br/>' ;
+    }
+
+    // Show an alert if there is a problem getting the geolocation
+    //
+    function onError() {
       alert('onError!');
-    };
+    }
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
   </script>
 </head>
 <body>
-<p id="geolocation">Finding geolocation...</p>
+<div id="myDiv"></div>
 </body>
 </html>
