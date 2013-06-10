@@ -1,0 +1,23 @@
+/* Start of Menu*/
+#wrap ul li{
+  width: 80%;
+}
+#wrap ul li img{
+  width: 100%;
+}
+div[data-role="content"]{
+  position: relative;
+  top: 100px;
+  z-index: 0;
+}
+/* End of Menu*/
+
+/* Start of Order*/
+.shopp{
+  height: 24px;
+}
+#left_bar {
+  margin-top: 5em;
+}
+/* End of Order*/
+
