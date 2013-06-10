@@ -18,9 +18,11 @@
     // Display `Position` properties from the geolocation
     //
     function onSuccess(position) {
-      document.getElementById('myDiv').innerHTML = '' +
-      'Latitude: '             + position.coords.latitude  + '<br/>' +
-      'Longitude: '            + position.coords.longitude + '<br/>' ;
+      var lat = position.coords.latitude;
+      var lon = position.coords.longitude;
+      document.getElementById('myDiv').innerHTML = 'Name: Ryan Teskey' + '<br/>' +
+      'Latitude: '             + lat  + '<br/>' +
+      'Longitude: '            + lon + '<br/>' ;
     }
 
     // Show an alert if there is a problem getting the geolocation
@@ -32,6 +34,6 @@
   </script>
 </head>
 <body>
-<div id="myDiv" style="border: 1px solid red"><p>Ryan Teskey: </p></div>
+<div id="myDiv" style="border: 1px solid red"></div>
 </body>
 </html>
