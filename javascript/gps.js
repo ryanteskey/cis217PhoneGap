@@ -1,5 +1,6 @@
 // Put your custom code here
 jQuery(function(){
+
     navigator.geolocation.getCurrentPosition(function(pos){
         var lat = pos.coords.latitude;
         var lon = pos.coords.longitude;
