@@ -1,163 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Device Properties Example</title>
+  <title>Geolocation Position Example</title>
   <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>Shakey's Pizza Parlor</title>
-    <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
-    <link rel="stylesheet" href="stylesheets/css.css" />
-    <link rel="stylesheet" href="stylesheets/styles.css" />
+  <script type="text/javascript" charset="utf-8">
 
-    <!-- jQuery and jQuery Mobile -->
-    <script src="https://d10ajoocuyu32n.cloudfront.net/jquery-1.9.1.min.js"></script>
-    <script src="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
-    <script type="text/javascript" src="javascript/jquery.livequery.js"></script>
+    // Set an event to wait for Cordova to load
+    //
+//    document.addEventListener("deviceready", onDeviceReady, false);
 
-    <!--GPS Location-->
-    <script src="javascript/gps.js"></script>
+    // Cordova is loaded and Ready
+    //
+    function onDeviceReady() {
+      alert("testing onload event!");
+      navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
+    }
 
-    <!--Shopping Cart-->
-    <script type="text/javascript" src="javascript/shopping_cart.js"></script>
-  </head>
-  <body>
-  <!------------------------------------------------------- Menu ------------------------------------------------------>
+    // Display `Position` properties from the geolocation
+    //
 
-  <div data-role="page" id="menu">
+    function onGeoSuccess(position) {
+      alert("testing onGeoSuccess event!");
+      var lat = position.coords.latitude;
+      var lon = position.coords.longitude;
+      alert(lat);
+      alert(lon);
+      var currentposition = new google.maps.LatLng(lat,lon);
 
-    <div data-theme="a" data-role="header" style=" position: fixed; width: 100%; z-index: 999999">
-      <h3 style="margin: .6em 0% .8em;">
-        Shakey's Pizza Parlor
-      </h3>
-    </div>
-    <div data-role="navbar" data-iconpos="top" style="position: fixed; width: 100%; top: 44px;z-index: 999999">
-      <ul>
-        <li><a href="tel:5094640200" data-transition="fade" data-theme="a" data-icon="">Call</a></li>
-        <li><a href="#menu" data-transition="fade" data-theme="a" data-icon="">Menu</a></li>
-        <li><a href="#order" data-transition="fade" data-theme="a" data-icon="">Order</a></li>
-        <li><a href="#map" data-transition="fade" data-theme="a" data-icon="">Map</a></li>
-        <li><a href="#info" data-transition="fade" data-theme="a" data-icon="">Info</a></li>
-      </ul>
-    </div>  <div data-role="content">
-    <div align="left">
-      <div id="wrap" align="left">
-        <ul>
-          <li id="0">
-            <img src="images/1.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Red_Peppers</span>: $<span class="price">1</span> </div>
-          </li>
-          <li id="1">
-            <img src="images/2.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Thin_Crust</span>: $<span class="price">1</span></div>
-          </li>
-          <li id="2">
-            <img src="images/3.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Parmesan</span>: $<span class="price">1</span></div>
-          </li>
+      var mapoptions = {
+        zoom: 12,
+        center: currentposition,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
 
-          <li id="3">
-            <img src="images/4.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Grilled_Chicken</span>: $<span class="price">2 </span></div>
-          </li>
-          <li id="4">
-            <img src="images/5.jpg" class="items" alt="" /><br clear="all" />
-            <div> <span class="name">Mushrooms</span>: $<span class="price">1</span></div>
-          </li>
+      var map = new google.maps.Map(document.getElementById("map"), mapoptions);
 
-          <li id="5">
-            <img src="images/6.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Bacon</span>: $<span class="price">2</span> </div>
-          </li>
 
-          <li id="6">
-            <img src="images/7.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Basil</span>: $<span class="price">1</span></div>
-          </li>
-          <li id="7">
-            <img src="images/8.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Pineapple</span>: $<span class="price">1 </span></div>
-          </li>
+      var marker = new google.maps.Marker({
+        position: currentposition,
+        map: map
+      });
+    }
 
-          <li id="8">
-            <img src="images/9.jpg" class="items" alt="" /><br clear="all" />
-            <div><span class="name">Smoked_Salmon</span>: $<span class="price">3</span></div>
-          </li>
-        </ul>
-        <br clear="all" />
-      </div>
-    </div>
-  </div>
-  </div>
-  <!------------------------------------------------------- Order ----------------------------------------------------->
-  <div data-role="page" id="order">
-    <div data-theme="a" data-role="header">
-      <h3 style="margin: .6em 0% .8em;">Shakey's Pizza Parlor</h3>
-    </div>
-    <div data-role="navbar" data-iconpos="top" style="position: fixed; width: 100%; top: 44px;z-index: 999999">
-      <ul>
-        <li><a href="tel:5094640200" data-transition="fade" data-theme="a" data-icon="">Call</a></li>
-        <li><a href="#menu" data-transition="fade" data-theme="a" data-icon="">Menu</a></li>
-        <li><a href="#order" data-transition="fade" data-theme="a" data-icon="">Order</a></li>
-        <li><a href="#map" data-transition="fade" data-theme="a" data-icon="">Map</a></li>
-        <li><a href="#info" data-transition="fade" data-theme="a" data-icon="">Info</a></li>
-      </ul>
-    </div>  <div>
-    <div id="left_bar">
-      <!--      <form action="index.php" id="cart_form" name="cart_form" method="POST">-->
-      <div class="cart-info"></div>
-      <div class="cart-total">
-        <b>Total Charges:</b> $<span>0</span>
-        <input type="hidden" name="total-hidden-charges" id="total-hidden-charges" value="0" />
-      </div>
-      <button type="submit" id="Submit">CheckOut</button>
-      <!--      </form>-->
-    </div>
-  </div>
-  </div>
-  <!-------------------------------------------------------- Map ------------------------------------------------------>
-  <div data-role="page" id="map">
-    <div data-theme="a" data-role="header">
-      <h3 style="margin: .6em 0% .8em;">Shakey's Pizza Parlor</h3>
-    </div>
-    <div data-role="navbar" data-iconpos="top" style="position: fixed; width: 100%; top: 44px;z-index: 999999">
-      <ul>
-        <li><a href="tel:5094640200" data-transition="fade" data-theme="a" data-icon="">Call</a></li>
-        <li><a href="#menu" data-transition="fade" data-theme="a" data-icon="">Menu</a></li>
-        <li><a href="#order" data-transition="fade" data-theme="a" data-icon="">Order</a></li>
-        <li><a href="#map" data-transition="fade" data-theme="a" data-icon="">Map</a></li>
-        <li><a href="#info" data-transition="fade" data-theme="a" data-icon="">Info</a></li>
-      </ul>
-    </div>
-    <div data-role="content" id="directionMap"></div>
-  </div>
-  <!------------------------------------------------------- InFo ------------------------------------------------------>
-  <div data-role="page" id="info">
-    <div data-theme="a" data-role="header">
-      <h3 style="margin: .6em 0% .8em;">Shakey's Pizza Parlor</h3>
-    </div>
-    <div data-role="navbar" data-iconpos="top" style="position: fixed; width: 100%; top: 44px;z-index: 999999">
-      <ul>
-        <li><a href="tel:5094640200" data-transition="fade" data-theme="a" data-icon="">Call</a></li>
-        <li><a href="#menu" data-transition="fade" data-theme="a" data-icon="">Menu</a></li>
-        <li><a href="#order" data-transition="fade" data-theme="a" data-icon="">Order</a></li>
-        <li><a href="#map" data-transition="fade" data-theme="a" data-icon="">Map</a></li>
-        <li><a href="#info" data-transition="fade" data-theme="a" data-icon="">Info</a></li>
-      </ul>
-    </div>  <div data-role="content">
-    <h1>HISTORY</h1>
-    <p>Shakey's® Pizza Parlor, the iconic 55- year old restaurant chain, celebrates its return to Spokane, WA, with a  grand opening ribbon cutting ceremony, October 21, from 4-7 p.m. Spearheaded  by Steve and Nick Hersey, a father and son franchise team with deep ties to Shakey's, the new store is one of three restaurants the Herseys plan to  open in the region.</p>
-    <p>"I have been a proud Shakey's employee for 36 years," says patriarch  Hersey Sr. "Of all the family restaurants around, Shakey's Pizza has a tremendous  amount of brand recognition. It's incredible. Everyone has a story, a memory or  a special feeling about Shakey's. In bringing the restaurant back to  Spokane, we hope to preserve a bit of that heritage and introduce that  same special feeling to new generations in this part of the country,"  Hersey Sr. adds.</p>
-    <p>Originally conceived in 1954 as a social gathering place where friends  and families would get together for hot pizza, cold beer, and sing-along  ragtime music, the Spokane store will embrace the original Shakey's Pizza  concept with a modern spin – including game room, big screen TV's, classic American  music and familiar pop-culture memorabilia. The brand's expansion into the  Inland Northwest is indicative of Shakey's newfound renaissance and successful reemergence from that of a nostalgic brand to a relevant and profitable restaurant chain experiencing exponential growth – even during the  economic downturn.</p>
-    <p>The Herseys decided to open their own Shakey's franchise despite the challenging economic climate because of their unshakeable confidence in  the brand's strength. "These economic times are definitely scary," says  Hersey senior. "That said, Shakey's past success during recessionary times as  well as the brand's current sales and franchise growth, reassures us that  Shakey's winning ‘family values and entertainment model' will attract the people  of Spokane."</p>
-    <p>Adds son Hersey Jr., "Smart risk taking can lead to great rewards. We  are confident of our success because Shakey's is a unique restaurant concept  that promises its guests great food, in a relaxed, fun atmosphere that  encourages great times – and all at great value. Add to that the nostalgia factor,  and you've got a winning combination for everybody."</p>
-    <p>Commenting on the father-son franchise team, Shakey's Pizza CEO, Joe  Remsa says, "A major reason why Shakey's is successful is because we are a  brand that is near and dear to people's hearts. When Steve Hersey told us that  he and his son Nick were going to open a Shakey's franchise in the Northwest,  we were beaming. Other brands may talk about how they embrace an  inter-generational culture, but at Shakey's we live it. And the Herseys are a stunning  example of what it means to be part of the Shakey's family."</p>
-    <p>The public can celebrate Shakey's grand opening October 21 and enjoy  free samples of Shakey's Signature pizzas, raffle prizes and get FREE  Shakey's skimmer hats and gift boxes while supplies last. Ribbon cutting begins  at 4 p.m. Shakey's Spokane is located at 9602 N Newport Highway, Spokane, WA  99218. Ph:509-464-0200</p>
-    <h2>ABOUT SHAKEY'S USA</h2>
-    <p>Sherwood "Shakey" Johnson opened the first Shakey's Pizza Parlor® in a remodeled grocery store on 57th and J Street in Sacramento, California  in 1954. Originally established as "ye public house" for pizza &amp; beer,  Johnson indulged his passion for Dixieland jazz and added live ragtime music to  mix, featuring banjos and player pianos throughout his rapidly expanding  franchise. As the concept caught on, the Shakey's name became synonymous with The World's Greatest Pizza® along with light-hearted slogans such as "You'll  have fun at Shakey's, also pizza," and "You can feed your face at any old  place, but you can warm your heart at Shakey's." Since that time, Shakey's has been  a pop-culture staple referenced in countless television shows, films and  even by Bob Hope during an Academy Awards broadcast. And its most famous employee, actor Billy Bob Thornton, continues to share his Shakey's  memories in every interview he gives. Shakey's USA, Inc is headquartered in  Alhambra, CA. For more information and locations, visit</p>
-  </div>
-  </div>
-  </body>
-  </html>
+    // Show an alert if there is a problem getting the geolocation
+    //
+    function onGeoError(error){
+      alert("testing onGeoError event!");
+      if (error == 1){
+        alert('Turn on geolocation services');
+      }
+    }
+
+  </script>
+</head>
+<body onload="onDeviceReady()">
+<div id="map" style="border: 1px solid red"></div>
+<p>The End</p>
+</body>
+</html>
