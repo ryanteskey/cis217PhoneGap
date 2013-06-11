@@ -1,60 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Geolocation Position Example</title>
+  <title>Device Properties Example</title>
+
   <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
   <script type="text/javascript" charset="utf-8">
 
-    // Set an event to wait for Cordova to load
+    // Wait for Cordova to load
     //
-//    document.addEventListener("deviceready", onDeviceReady, false);
+    document.addEventListener("deviceready", onDeviceReady, false);
 
-    // Cordova is loaded and Ready
+    // Cordova is ready
     //
     function onDeviceReady() {
-      alert("testing onload event!");
-      navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
 
-    // Display `Position` properties from the geolocation
+    // onSuccess Geolocation
     //
-
-    function onGeoSuccess(position) {
-      alert("testing onGeoSuccess event!");
-      var lat = position.coords.latitude;
-      var lon = position.coords.longitude;
-      alert(lat);
-      alert(lon);
-      var currentposition = new google.maps.LatLng(lat,lon);
-
-      var mapoptions = {
-        zoom: 12,
-        center: currentposition,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-
-      var map = new google.maps.Map(document.getElementById("map"), mapoptions);
-
-
-      var marker = new google.maps.Marker({
-        position: currentposition,
-        map: map
-      });
+    function onSuccess(position) {
+      var element = document.getElementById('geolocation');
+      element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+      'Longitude: '          + position.coords.longitude             + '<br />' +
+      'Altitude: '           + position.coords.altitude              + '<br />' +
+      'Accuracy: '           + position.coords.accuracy              + '<br />' +
+      'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+      'Heading: '            + position.coords.heading               + '<br />' +
+      'Speed: '              + position.coords.speed                 + '<br />' +
+      'Timestamp: '          +                                   position.timestamp          + '<br />';
     }
 
-    // Show an alert if there is a problem getting the geolocation
+    // onError Callback receives a PositionError object
     //
-    function onGeoError(error){
-      alert("testing onGeoError event!");
-      if (error == 1){
-        alert('Turn on geolocation services');
-      }
+    function onError(error) {
+      alert('code: '    + error.code    + '\n' +
+      'message: ' + error.message + '\n');
     }
 
   </script>
 </head>
-<body onload="onDeviceReady()">
-<div id="map" style="border: 1px solid red"></div>
-<p>The End</p>
+<body>
+<p id="geolocation">Finding geolocation...</p>
 </body>
 </html>
