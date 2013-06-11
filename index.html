@@ -21,8 +21,10 @@
 
     function onGeoSuccess(position) {
       alert("testing onGeoSuccess event!");
-      lat = position.coords.latitude;
-      lon = position.coords.longitude;
+      var lat = position.coords.latitude;
+      var lon = position.coords.longitude;
+      alert(lat);
+      alert(lon);
       var currentposition = new google.maps.LatLng(lat,lon);
 
       var mapoptions = {
