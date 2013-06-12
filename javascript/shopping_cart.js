@@ -3,7 +3,11 @@
  * Date: 5/14/13
  * Time: 11:52 AM
  * To change this template use File | Settings | File Templates.*/
+$( document ).bind( "mobileinit", function() {
+    // Make your jQuery Mobile framework configuration changes here!
 
+    $.mobile.allowCrossDomainPages = true;
+});
 $(document).ready(function() {
     var cart = new Array();
     $('#wrap li').click(function(){
@@ -74,12 +78,9 @@ $(document).ready(function() {
             check_out_url+="&name[]="+cart[item].name+"&qty[]="+cart[item].qty+"&price[]="+cart[item].price
         }
         check_out_url+="&total="+totalCharge;
-        $.getJSON("buy.php?" + check_out_url,function(data){
+        $.getJSON("http://cis217-4.ryanteskey.com/buy.php?" + check_out_url,function(data){
             $('#left_bar .cart-info').append(data);
         });
-        console.log("http://cis217-4.ryanteskey.com/buy.php?" + check_out_url)
-//        $('#left_bar').html('Total Charges: $'+totalCharge);
-//        return false;
     });
     function clickCounter(){
         if(typeof(Storage)!=="undefined"){
