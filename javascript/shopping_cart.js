@@ -66,6 +66,8 @@ $(document).ready(function() {
         $(this).parent().remove();
     });
     $('#Submit').livequery('click', function() {
+        $.support.cors = true;
+        $.mobile.allowCrossDomainPages = true;
         var check_out_url = '';
         var totalCharge = $('#total-hidden-charges').val();
         for(var item in cart){
